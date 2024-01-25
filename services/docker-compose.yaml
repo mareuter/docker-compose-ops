@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  helios:
+    container_name: helios
+    image: ghcr.io/mareuter/helios:0.3
+    restart: always
+    ports:
+      - "8003:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"

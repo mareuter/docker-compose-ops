@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:1.8
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - /volume1/docker/influxdb/data:/var/lib/influxdb
+      - /volume1/docker/influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+    environment:
+      - INFLUXDB_CONFIG_FILE=/etc/influxdb/influxdb.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.3.1
+    restart: always
+    user: ${UID}
+    ports:
+      - "3000:3000"
+    volumes:
+      - /volume1/docker/grafana/data:/var/lib/grafana
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+  mqtt-server:
+    container_name: mqtt-server
+    image: eclipse-mosquitto:2.0
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - /volume1/docker/mosquitto/passwd:/etc/mosquitto/passwd
+      - /volume1/docker/mosquitto/config:/mosquitto/config
+      - /volume1/docker/mosquitto/data:/mosquitto/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+  telegraf:
+    container_name: telegraf
+    image: telegraf:1.29
+    restart: always
+    volumes:
+      - /volume1/docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+networks:
+  default:
+    name: influxdb
+    external: true
