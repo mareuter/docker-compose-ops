@@ -25,6 +25,8 @@ services:
       - "3000:3000"
     volumes:
       - /volume1/docker/grafana/data:/var/lib/grafana
+    secrets:
+      - gf_smtp_password
     logging:
       driver: "json-file"
       options:
@@ -57,6 +59,9 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+secrets:
+  gf_smtp_password:
+    file: /volume1/docker/grafana/smtp_password
 networks:
   default:
     name: influxdb
