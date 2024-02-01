@@ -25,6 +25,7 @@ services:
       - "3000:3000"
     volumes:
       - /volume1/docker/grafana/data:/var/lib/grafana
+      - /volume1/docker/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
     secrets:
       - gf_smtp_password
     logging:
