@@ -2,7 +2,7 @@ version: "3.9"
 services:
   helios:
     container_name: helios
-    image: ghcr.io/mareuter/helios:0.3
+    image: ghcr.io/mareuter/helios:0.5
     restart: always
     ports:
       - "8003:8000"
