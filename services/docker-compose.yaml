@@ -11,3 +11,17 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:1
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - /volume1/docker/uptime-kuma:/app/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
